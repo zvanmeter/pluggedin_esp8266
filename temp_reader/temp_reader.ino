@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include "wifi_settings.h"
 
-//Values defined in wifi_setting.h
+//Values defined in wifi_settings.h
 const char* ssid = WIFI_SSID;
 const char* ssid_password = WIFI_SECRET;
 
