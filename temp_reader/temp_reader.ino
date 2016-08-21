@@ -1,7 +1,9 @@
 #include <ESP8266WiFi.h>
+#include "wifi_settings.h"
 
-const char* ssid = "TheForgeGuest";
-const char* ssid_password = "n0c0nstraints!";
+//Values defined in wifi_setting.h
+const char* ssid = WIFI_SSID;
+const char* ssid_password = WIFI_SECRET;
 
 void connectToWiFi(){
   Serial.println();
