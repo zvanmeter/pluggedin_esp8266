@@ -10,6 +10,7 @@ void connectToWiFi(){
   Serial.print("Connecting to ");
   Serial.print(ssid);
   
+  WiFi.softAPdisconnect(true);
   WiFi.begin(ssid, ssid_password);
   
   while (WiFi.status() != WL_CONNECTED) {
