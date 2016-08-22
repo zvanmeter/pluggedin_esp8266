@@ -15,7 +15,7 @@ const int secondsBetweenReadings = 60;
 
 DHT dht(DHT_PIN, DHT_SENSOR_TYPE);
 
-float humidity = dht.readHumidity();
+float humidity;
 float temperature;
 
 void connectToWiFi(){
@@ -85,9 +85,12 @@ void printTempAndHumidity() {
 }
 
 void uploadToThingSpeak() {
-  WiFiClient client;
   const int httpPort = 80;
   const char* hostUrl = "api.thingspeak.com";
+  const String temperatureField = "field1";
+  const String humidityField = "field2";
+
+  WiFiClient client;
   if (!client.connect(hostUrl, httpPort)) {
     Serial.print("Connection to ");
     Serial.print(hostUrl);
@@ -98,9 +101,9 @@ void uploadToThingSpeak() {
   String url_parameters = "/update?";
          url_parameters += "api_key=";
          url_parameters += api_key;
-         url_parameters +="&field1=";
+         url_parameters +="&" + temperatureField + "=";
          url_parameters += temperature;
-         url_parameters +="&field2=";
+         url_parameters +="&" + humidityField + "=";
          url_parameters += humidity;
 
   Serial.print("Requesting URL: ");
