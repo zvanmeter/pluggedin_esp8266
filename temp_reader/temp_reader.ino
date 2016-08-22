@@ -1,3 +1,4 @@
+#include <DHT.h>
 #include <ESP8266WiFi.h>
 #include "wifi_settings.h"
 
@@ -6,7 +7,12 @@ const char* ssid = WIFI_SSID;
 const char* ssid_password = WIFI_SECRET;
 
 const int BOARD_LED_PIN = 2;
+const int DHT_PIN = 10;
+const char DHT_SENSOR_TYPE = DHT22;
+const bool getFahrenheit = true;
 const int secondsBetweenLoops = 10;
+
+DHT dht(DHT_PIN, DHT_SENSOR_TYPE);
 
 void connectToWiFi(){
   Serial.println();
@@ -33,11 +39,12 @@ void setup() {
   Serial.begin(9600);
   pinMode(BOARD_LED_PIN, OUTPUT);
   connectToWiFi();
+  dht.begin();
 }
 
 void loop() {
   turnOnBoardLed();
-  Serial.println("This page intentionally left blank.");
+  readTempAndHumidity();
   turnOffBoardLed();
   delay(secondsBetweenLoops * 1000);
 }
@@ -58,3 +65,16 @@ void toggleBoardLed(){
   }
 }
 
+void readTempAndHumidity(){
+  float humidity = dht.readHumidity();
+  float temp = dht.readTemperature(getFahrenheit);
+  printTempAndHumidity(temp, humidity);
+}
+
+void printTempAndHumidity(float temp, float humidity) {
+  Serial.print("Humidity: ");
+  Serial.print(humidity, 1);
+  Serial.print(" %, Temp: ");
+  Serial.print(temp, 1);
+  Serial.println(" F");
+}
