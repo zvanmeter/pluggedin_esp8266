@@ -10,7 +10,7 @@ const int BOARD_LED_PIN = 2;
 const int DHT_PIN = 10;
 const char DHT_SENSOR_TYPE = DHT22;
 const bool getFahrenheit = true;
-const int secondsBetweenLoops = 10;
+const int secondsBetweenReadings = 20;
 
 DHT dht(DHT_PIN, DHT_SENSOR_TYPE);
 
@@ -46,7 +46,7 @@ void loop() {
   turnOnBoardLed();
   readTempAndHumidity();
   turnOffBoardLed();
-  delay(secondsBetweenLoops * 1000);
+  delay(secondsBetweenReadings * 1000);
 }
 
 void turnOnBoardLed(){
