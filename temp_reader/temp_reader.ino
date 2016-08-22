@@ -107,8 +107,13 @@ void uploadToThingSpeak() {
   Serial.print(host_url);
   Serial.println(url_parameters);
 
-  client.print(String("GET ") + url_parameters + " HTTP/1.1\r\n" +
-               "Host: " + host_url + "\r\n" +
-               "Connection: close\r\n\r\n");
+  client.print("GET ");
+  client.print(url_parameters);
+  client.println(" HTTP/1.1");
+  client.print("Host: ");
+  client.println(host_url);
+  client.println("Connection: close");
+  client.println();
+
   client.stop();
 }
