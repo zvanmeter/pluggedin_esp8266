@@ -16,10 +16,13 @@ void connectToWiFi(){
   WiFi.softAPdisconnect(true);
   WiFi.begin(ssid, ssid_password);
   
+  turnOnBoardLed();
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    toggleBoardLed();
+    delay(250);
     Serial.print(".");
   }
+  turnOffBoardLed();
   
   Serial.println();
   Serial.print("WiFi connected, IP address: ");  
@@ -28,8 +31,8 @@ void connectToWiFi(){
 
 void setup() {
   Serial.begin(9600);
-  connectToWiFi();
   pinMode(BOARD_LED_PIN, OUTPUT);
+  connectToWiFi();
 }
 
 void loop() {
@@ -46,3 +49,12 @@ void turnOnBoardLed(){
 void turnOffBoardLed(){
   digitalWrite(BOARD_LED_PIN, HIGH);
 }
+
+void toggleBoardLed(){
+  if (digitalRead(BOARD_LED_PIN)) {
+    digitalWrite(BOARD_LED_PIN, LOW);
+  } else {
+    digitalWrite(BOARD_LED_PIN, HIGH);
+  }
+}
+
