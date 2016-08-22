@@ -105,7 +105,8 @@ void uploadToThingSpeak() {
 
   Serial.print("Requesting URL: ");
   Serial.print(host_url);
-  Serial.println(url_parameters);
+  Serial.print(url_parameters);
+  Serial.print(" ...");
 
   client.print("GET ");
   client.print(url_parameters);
@@ -115,5 +116,6 @@ void uploadToThingSpeak() {
   client.println("Connection: close");
   client.println();
 
+  Serial.println(client.readStringUntil('\r'));
   client.stop();
 }
