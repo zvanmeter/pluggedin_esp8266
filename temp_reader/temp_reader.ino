@@ -11,7 +11,7 @@ const int BOARD_LED_PIN = 2;
 const int DHT_PIN = 10;
 const char DHT_SENSOR_TYPE = DHT22;
 const bool getFahrenheit = true;
-const int secondsBetweenReadings = 20;
+const int secondsBetweenReadings = 60;
 
 DHT dht(DHT_PIN, DHT_SENSOR_TYPE);
 
