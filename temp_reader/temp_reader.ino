@@ -87,10 +87,10 @@ void printTempAndHumidity() {
 void uploadToThingSpeak() {
   WiFiClient client;
   const int httpPort = 80;
-  const char* host_url = "api.thingspeak.com";
-  if (!client.connect(host_url, httpPort)) {
+  const char* hostUrl = "api.thingspeak.com";
+  if (!client.connect(hostUrl, httpPort)) {
     Serial.print("Connection to ");
-    Serial.print(host_url);
+    Serial.print(hostUrl);
     Serial.println(" failed!");
     return;
   }
@@ -104,7 +104,7 @@ void uploadToThingSpeak() {
          url_parameters += humidity;
 
   Serial.print("Requesting URL: ");
-  Serial.print(host_url);
+  Serial.print(hostUrl);
   Serial.print(url_parameters);
   Serial.print(" ...");
 
@@ -112,7 +112,7 @@ void uploadToThingSpeak() {
   client.print(url_parameters);
   client.println(" HTTP/1.1");
   client.print("Host: ");
-  client.println(host_url);
+  client.println(hostUrl);
   client.println("Connection: close");
   client.println();
 
