@@ -67,14 +67,14 @@ void toggleBoardLed(){
 
 void readTempAndHumidity(){
   float humidity = dht.readHumidity();
-  float temp = dht.readTemperature(getFahrenheit);
-  printTempAndHumidity(temp, humidity);
+  float temperature = dht.readTemperature(getFahrenheit);
+  printTempAndHumidity(temperature, humidity);
 }
 
-void printTempAndHumidity(float temp, float humidity) {
+void printTempAndHumidity(float temperature, float humidity) {
   Serial.print("Humidity: ");
   Serial.print(humidity, 1);
-  Serial.print(" %, Temp: ");
-  Serial.print(temp, 1);
+  Serial.print(" %, Temperature: ");
+  Serial.print(temperature, 1);
   Serial.println(" F");
 }
