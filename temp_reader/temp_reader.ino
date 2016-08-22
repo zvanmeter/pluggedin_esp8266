@@ -5,6 +5,7 @@
 //Values defined in wifi_settings.h
 const char* ssid = WIFI_SSID;
 const char* ssid_password = WIFI_SECRET;
+const char* api_key = API_KEY;
 
 const int BOARD_LED_PIN = 2;
 const int DHT_PIN = 10;
@@ -49,6 +50,7 @@ void loop() {
   turnOnBoardLed();
   readTempAndHumidity();
   printTempAndHumidity();
+  uploadToThingSpeak();
   turnOffBoardLed();
   delay(secondsBetweenReadings * 1000);
 }
@@ -80,4 +82,33 @@ void printTempAndHumidity() {
   Serial.print(" %, Temperature: ");
   Serial.print(temperature, 1);
   Serial.println(" F");
+}
+
+void uploadToThingSpeak() {
+  WiFiClient client;
+  const int httpPort = 80;
+  const char* host_url = "api.thingspeak.com";
+  if (!client.connect(host_url, httpPort)) {
+    Serial.print("Connection to ");
+    Serial.print(host_url);
+    Serial.println(" failed!");
+    return;
+  }
+
+  String url_parameters = "/update?";
+         url_parameters += "api_key=";
+         url_parameters += api_key;
+         url_parameters +="&field1=";
+         url_parameters += temperature;
+         url_parameters +="&field2=";
+         url_parameters += humidity;
+
+  Serial.print("Requesting URL: ");
+  Serial.print(host_url);
+  Serial.println(url_parameters);
+
+  client.print(String("GET ") + url_parameters + " HTTP/1.1\r\n" +
+               "Host: " + host_url + "\r\n" +
+               "Connection: close\r\n\r\n");
+  client.stop();
 }
