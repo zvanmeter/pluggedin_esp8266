@@ -47,11 +47,16 @@ void setup() {
 }
 
 void loop() {
+  unsigned long runTimeStart = millis();
   turnOnBoardLed();
   readTempAndHumidity();
   printTempAndHumidity();
   uploadToThingSpeak();
   turnOffBoardLed();
+  unsigned long runTimeEnd = millis();
+  unsigned long runTimeDelta = runTimeEnd - runTimeStart;
+  Serial.print(runTimeDelta/1000);
+  Serial.println(" second loop run time");
   delay(secondsBetweenReadings * 1000);
 }
 
