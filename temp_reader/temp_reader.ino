@@ -14,6 +14,9 @@ const int secondsBetweenReadings = 20;
 
 DHT dht(DHT_PIN, DHT_SENSOR_TYPE);
 
+float humidity = dht.readHumidity();
+float temperature;
+
 void connectToWiFi(){
   Serial.println();
   Serial.print("Connecting to ");
@@ -45,6 +48,7 @@ void setup() {
 void loop() {
   turnOnBoardLed();
   readTempAndHumidity();
+  printTempAndHumidity();
   turnOffBoardLed();
   delay(secondsBetweenReadings * 1000);
 }
@@ -66,12 +70,11 @@ void toggleBoardLed(){
 }
 
 void readTempAndHumidity(){
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature(getFahrenheit);
-  printTempAndHumidity(temperature, humidity);
+  humidity = dht.readHumidity();
+  temperature = dht.readTemperature(getFahrenheit);
 }
 
-void printTempAndHumidity(float temperature, float humidity) {
+void printTempAndHumidity() {
   Serial.print("Humidity: ");
   Serial.print(humidity, 1);
   Serial.print(" %, Temperature: ");
